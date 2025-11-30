@@ -1,0 +1,123 @@
+.modal-container {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 1;
+  visibility: visible;
+  backdrop-filter: blur(3px);
+  padding: 20px;
+  transition: opacity 0.3s ease, visibility 0s ease 0s;
+}
+
+.modal-container.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s ease 0.3s,
+    backdrop-filter 0.3s ease;
+  backdrop-filter: blur(0px);
+}
+
+.modal-content {
+  background-color: #fff;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 35px 40px;
+  position: relative;
+  transform: scale(1);
+  transition: transform 0.3s ease;
+}
+
+.modal-container.hidden .modal-content {
+  transform: scale(0.95);
+}
+
+.modal-content .modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #6c757d;
+  transform: rotate(45deg);
+  transition: all 0.2s ease;
+}
+
+.modal-content .modal-close-btn:hover {
+  transform: rotate(135deg);
+  color: #343a40;
+  background-color: #e2e6ea;
+}
+
+#recipe-details-content h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #f9a11b;
+}
+
+#recipe-details-content img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#recipe-details-content h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #f9a11b;
+  padding-bottom: 8px;
+}
+
+#recipe-details-content ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 25px;
+}
+
+#recipe-details-content ul li {
+  padding: 8px 0;
+  border-bottom: 1px dashed #e9ecef;
+  font-size: 0.95rem;
+}
+
+#recipe-details-content ul li:last-child {
+  border-bottom: none;
+}
+
+#recipe-details-content p {
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+#recipe-details-content a {
+  color: #f9a11b;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+#recipe-details-content a:hover {
+  color: #e68900;
+  text-decoration: underline;
+}
+
+#recipe-details-content .video-wrapper {
+  margin-top: 15px;
+  margin-bottom: 8px;
+}
