@@ -19,7 +19,7 @@
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    white-space: nowrap;
+    white-space: nowrap; /*文字不換行*/
     margin-bottom: 30px;
 }
 
