@@ -1,1 +1,50 @@
+<!DOCTYPE html>
 
+<html>
+
+  <head>
+    <meta charset="UTF-8" />
+    <title>Recipe Finder</title>
+    <link rel="icon" type="image/png" href="plate.png" />
+    <link rel="stylesheet" href="search.css" />
+    <link rel="stylesheet" href="sidebar.css" />
+    <link rel="stylesheet" href="modal.css" />
+  </head>
+
+  <body>
+    <div class="sidebar">
+    <div class="logo" onclick="window.location.href='search.html'">🍽 Recipe Finder 🍽</div>
+      <ul class="nav-menu">
+        <li><a href="search.html">🏠 Search Recipes</a></li>
+        <li><a href="favorites.html">⭐ My Favorites</a></li>
+        <li><a href="share.html">📖 Share a Recipe</a></li>
+      </ul>
+    </div>
+
+    <div class="content">
+      <div class="recipe-finder-container">
+        <h1>Recipe Finder</h1>
+
+        <form class="search-box" id="search-form" >
+          <input type="text" id="search-input" placeholder="Search for an ingredient or dish" />
+          <button type="submit" id="search-button">Search</button>
+        </form>
+
+        <div class="message" id="message-area">
+          Search for a recipe!
+        </div>
+
+        <div class="results-grid" id="results-grid"></div>
+      </div>
+
+      <div class="modal-container hidden" id="recipe-modal">
+        <div class="modal-content">
+          <button class="modal-close-btn" id="modal-close-btn" >+</button>
+          <div id="recipe-details-content"></div>
+        </div>
+      </div>
+    </div>
+    <script src="search.js"></script>
+  </body>
+
+</html>
