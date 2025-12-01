@@ -7,25 +7,36 @@
     <title>Recipe Finder</title>
     <link rel="icon" type="image/png" href="plate.png" />
     <link rel="stylesheet" href="search.css" />
-    <link rel="stylesheet" href="sidebar.css" /> 
+    <link rel="stylesheet" href="sidebar.css" />
     <link rel="stylesheet" href="modal.css" />
   </head>
 
   <body>
-    <div class="sidebar"> <!-- 側邊欄 -->
-    <div class="logo" onclick="window.location.href='index.html'">🍽 Recipe Finder 🍽</div>
+    <!-- 側邊欄 -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo" onclick="window.location.href='index.html'">
+          <span class="logo-icon">🍽</span>
+          <span class="logo-label">Recipe Finder</span>
+        </div>
+      </div>
       <ul class="nav-menu">
-        <li><a href="index.html">🏠 Search Recipes</a></li>
-        <li><a href="favorites.html">⭐ My Favorites</a></li>
-        <li><a href="share.html">📖 Share a Recipe</a></li>
+        <li><a href="index.html"><span class="icon">🏠</span><span class="label">Search Recipes</span></a></li>
+        <li><a href="favorites.html"><span class="icon">⭐</span><span class="label">My Favorites</span></a></li>
+        <li><a href="share.html"><span class="icon">📖</span><span class="label">Share a Recipe</span></a></li>
       </ul>
     </div>
 
-    <div class="content"> <!-- 搜尋頁內容 -->
+    <!-- 漢堡按鈕 -->
+    <button id="toggle-btn" class="toggle-btn">☰</button>
+
+    <!-- 搜尋頁內容 -->
+    <div class="content" id="content">
       <div class="recipe-finder-container">
         <h1>Recipe Finder</h1>
 
-        <form class="search-box" id="search-form" > <!-- 搜尋欄 -->
+        <!-- 搜尋欄 -->
+        <form class="search-box" id="search-form" >
           <input type="text" id="search-input" placeholder="Search for an ingredient or dish" />
           <button type="submit" id="search-button">Search</button>
         </form>
@@ -48,6 +59,7 @@
       </div>
     </div>
     <script src="search.js"></script>
+    <script src="sidebar.js"></script>
   </body>
 
 </html>
