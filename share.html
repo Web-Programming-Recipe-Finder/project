@@ -11,20 +11,31 @@
   </head>
 
   <body>
-    <div class="sidebar"> <!-- 側邊欄 -->
-      <div class="logo" onclick="window.location.href='index.html'">🍽 Recipe Finder 🍽</div>
+    <!-- 側邊欄 -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo" onclick="window.location.href='index.html'">
+          <span class="logo-icon">🍽</span>
+          <span class="logo-label">Recipe Finder</span>
+        </div>
+      </div>
       <ul class="nav-menu">
-        <li><a href="index.html">🏠 Search Recipes</a></li>
-        <li><a href="favorites.html">⭐ My Favorites</a></li>
-        <li><a href="share.html">📖 Share a Recipe</a></li>
+        <li><a href="index.html"><span class="icon">🏠</span><span class="label">Search Recipes</span></a></li>
+        <li><a href="favorites.html"><span class="icon">⭐</span><span class="label">My Favorites</span></a></li>
+        <li><a href="share.html"><span class="icon">📖</span><span class="label">Share a Recipe</span></a></li>
       </ul>
     </div>
 
-    <div class="content"> <!-- 分享頁內容 -->
+    <!-- 漢堡按鈕 -->
+    <button id="toggle-btn" class="toggle-btn">☰</button>
+
+    <!-- 分享頁內容 -->
+    <div class="content" id="content">
       <div class="share-container">
         <h1>Nothing Here Now</h1>
       </div>
     </div>
+    <script src="sidebar.js"></script>
   </body>
 
 </html>

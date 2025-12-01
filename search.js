@@ -168,7 +168,7 @@ function displayRecipeDetails(recipe) {
     ? `<h3>Video Recipe</h3><div class="video-wrapper"><a href="${recipe.strYoutube}" target="_blank">Watch on YouTube</a><div>`
     : "";
   const sourcHTML = recipe.strSource
-    ? `<div class="source-wrapper"><a href="${recipe.strSource}" target="_blank">View Original Source</a></div>`
+    ? `<h3>Recipe Source</h3><div class="source-wrapper"><a href="${recipe.strSource}" target="_blank">View Original Source</a></div>`
     : "";
 
   // 填入資料

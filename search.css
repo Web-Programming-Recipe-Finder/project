@@ -26,6 +26,7 @@ h1 {
   font-weight: 700;
   margin-bottom: 25px;
   letter-spacing: -1px;
+  white-space: nowrap;
 }
 
 .search-box {
@@ -108,7 +109,6 @@ h1 {
 .message {
   margin: 25px auto;
   padding: 10px;
-  max-width: 600px;
   font-size: 1rem;
   border-radius: 8px;
 }
