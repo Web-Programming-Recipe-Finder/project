@@ -10,7 +10,7 @@ var authRouter = require('./routes/auth');
 
 var app = express();
 
-mongoose.connect("mongodb+srv://user:010203@webprogramming.do8ki3h.mongodb.net/RecipeFinder")
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 

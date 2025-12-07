@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
 const router = express.Router();
-const SECRET = "mongodb+srv://user:010203@webprogramming.do8ki3h.mongodb.net/RecipeFinder";
+const SECRET = process.env.SECRET;
 
 // 註冊
 router.post("/signup", async (req, res) => {
