@@ -14,10 +14,189 @@ body {
   color: #343a40;
 }
 
-h1 {
+/* 收藏頁容器 */
+.favorites-container {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.favorites-container h1 {
+  width: 100%;
+  text-align: center;
   font-size: 3.5rem;
   font-weight: 700;
   margin-bottom: 25px;
   letter-spacing: -1px;
-  white-space: nowrap;
+  line-height: 2.6;
+  z-index: 1;
+}
+
+.favorites-container .message {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  margin-bottom: 25px;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+}
+
+.message.error {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
+.message.info,
+.message.loading {
+  color: #17a2b8;
+  background-color: #d1ecf1;
+  border: 1px solid #bee5eb;
+}
+
+/* 結果格子 */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 360px));
+  justify-content: center; /* 整體置中 */
+  gap: 25px;
+  width: 100%;
+}
+
+/* 單張食譜卡 */
+.recipe-item {
+  position: relative;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  width: 100%;
+  max-width: 360px; /* 限制卡片最大寬度 */
+  transition: all 0.25s ease-in-out;
+}
+
+.recipe-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.recipe-item img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.recipe-item h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 15px;
+  margin: 0;
+}
+
+.recipe-item .remove-btn {
+  margin: 10px 15px;
+  padding: 8px 12px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background-color 0.3s ease;
+}
+
+.recipe-item .remove-btn:hover {
+  background-color: #c82333;
+}
+
+/* 浮動訊息 */
+#floating-message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 90%;
+  text-align: center;
+}
+
+#floating-message.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+#floating-message.error {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
+#floating-message.success {
+  color: #17a2b8;
+  background-color: #d1ecf1;
+  border: 1px solid #bee5eb;
+}
+
+#floating-message strong {
+  font-weight: 700;
+  display: block;
+  margin-bottom: 5px;
+}
+
+#floating-message p {
+  margin: 0;
+  font-weight: 400;
+  font-size: 0.95rem;
+}
+
+/* 收藏卡 */
+.favorite-card {
+  display: inline-block;
+  width: 100%;
+  max-width: 360px;
+  background: white;
+  padding: 15px;
+  margin: 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.favorite-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.favorite-card button {
+  margin-top: 10px;
+  width: 100%;
+  background: #ff7b00;
+  color: white;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.favorite-card button:hover {
+  background: #e46a00;
 }

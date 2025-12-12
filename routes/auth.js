@@ -3,8 +3,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
+require("dotenv").config();
 const router = express.Router();
-const SECRET = process.env.SECRET;
+const SECRET = process.env.SECRET || "s8f7G!kL2pQ#xR9vT1bZ";
 
 // 註冊
 router.post("/signup", async (req, res) => {

@@ -59,6 +59,20 @@ function clearMessage() {
   messageArea.className = "message";
 }
 
+function showFloatingMessage(message, type = "success", duration = 3000) {
+  const msgDiv = document.getElementById("floating-message");
+  msgDiv.textContent = message;
+
+  // 先移除舊的 class 再加上新的
+  msgDiv.className = "floating-message show";
+  msgDiv.classList.add(type);
+
+  // 自動消失
+  setTimeout(() => {
+    msgDiv.classList.remove("show");
+  }, duration);
+}
+
 // 將搜尋結果顯示成卡片(DOM)
 function displayRecipes(recipes) {
   if (!recipes || recipes.length === 0) {
@@ -69,12 +83,46 @@ function displayRecipes(recipes) {
   recipes.forEach(recipe => {
     const recipeDiv = document.createElement("div");
     recipeDiv.classList.add("recipe-item");
-    recipeDiv.dataset.id = recipe.idMeal; // 儲存食譜 ID
+    recipeDiv.dataset.id = recipe.idMeal;
 
     recipeDiv.innerHTML = `
-        <img src="${recipe.strMealThumb}" alt="${recipe.strMeal}" loading="lazy">
-        <h3>${recipe.strMeal}</h3>
+      <img src="${recipe.strMealThumb}" alt="${recipe.strMeal}" loading="lazy">
+      <h3>${recipe.strMeal}</h3>
+      <button class="add-favorite-btn">⭐</button>
     `;
+
+    // 點擊卡片開 modal
+    recipeDiv.addEventListener("click", () => getRecipeDetails(recipe.idMeal));
+
+    // 點擊收藏按鈕
+    recipeDiv.querySelector(".add-favorite-btn").addEventListener("click", async (e) => {
+      e.stopPropagation(); // 防止觸發 modal
+      const token = localStorage.getItem("token");
+      if (!token) {
+        showFloatingMessage("Please log in first!", "error");  
+        return
+      }
+
+      try {
+        const res = await fetch("/favorites/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
+          },
+          body: JSON.stringify({
+            recipeId: recipe.idMeal,
+            title: recipe.strMeal,
+            thumbnail: recipe.strMealThumb
+          }),
+        });
+        const data = await res.json();
+        if (data.success) showFloatingMessage("Added to favorites!", "success");
+        else showFloatingMessage(data.message, "error");
+      } catch (err) {
+        showFloatingMessage("Failed to add favorite.", "error");
+      }
+    });
 
     resultsGrid.appendChild(recipeDiv);
   });

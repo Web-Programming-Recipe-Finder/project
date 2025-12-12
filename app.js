@@ -6,11 +6,14 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 var cors = require('cors');
 
+require("dotenv").config();
 var authRouter = require('./routes/auth'); 
+var favoritesRouter = require('./routes/favorites');
 
 var app = express();
 
-mongoose.connect(process.env.MONGO_URI)
+const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://user:010203@webprogramming.do8ki3h.mongodb.net/RecipeFinder";
+mongoose.connect(MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 
@@ -26,6 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/auth', authRouter);
+app.use('/favorites', favoritesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

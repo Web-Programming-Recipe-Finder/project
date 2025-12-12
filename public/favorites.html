@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="stylesheets/favorites.css" />
     <link rel="stylesheet" href="stylesheets/sidebar.css" />
     <link rel="stylesheet" href="stylesheets/login.css" />
+    <link rel="stylesheet" href="stylesheets/modal.css" />
   </head>
 
   <body>
@@ -38,11 +39,27 @@
     <!-- 收藏頁內容 -->
     <div class="content" id="content">
       <div class="favorites-container">
-        <h1>Nothing Here Now</h1>
+        <h1>My Favorites</h1>
+
+        <!-- 提示字框 -->
+        <div class="message" id="message-area"></div>
+        <div id="floating-message" class="floating-message hidden"></div>
+
+        <!-- 食譜卡列表 -->
+        <div class="results-grid" id="results-grid"></div>
+      </div>
+
+      <!-- 食譜卡彈出視窗 -->
+      <div class="modal-container hidden" id="recipe-modal">
+        <div class="modal-content">
+          <button class="modal-close-btn" id="modal-close-btn" >+</button>
+          <div id="recipe-details-content"></div>
+        </div>
       </div>
     </div>
     <script src="javascripts/sidebar.js"></script>
     <script src="javascripts/login.js"></script>
+    <script src="javascripts/favorites.js"></script>
   </body>
 
 </html>
