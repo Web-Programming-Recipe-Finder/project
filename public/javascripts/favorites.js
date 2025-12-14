@@ -29,6 +29,7 @@ async function loadFavorites() {
     }
 
     // 顯示收藏清單
+    showMessage("Loading your favorites...", false, true);
     resultsGrid.innerHTML = "";
 
     data.favorites.forEach((fav) => {
@@ -78,6 +79,7 @@ async function removeFavorite(id) {
 
     const data = await res.json();
     if (data.success) {
+      showFloatingMessage("Successfully deleted!", "success");
       loadFavorites();
     } else {
       showFloatingMessage("Failed to remove favorite.", "error");

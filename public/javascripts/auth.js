@@ -1,4 +1,4 @@
-//註冊
+// 註冊
 const signupBtn = document.getElementById("signup-btn");
 if (signupBtn) {
     signupBtn.addEventListener("click", async () => {
@@ -27,7 +27,7 @@ if (signupBtn) {
     });
 }
 
-//登入
+// 登入
 const loginBtn = document.getElementById("login-btn");
 if (loginBtn) {
     loginBtn.addEventListener("click", async () => {
