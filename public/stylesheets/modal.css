@@ -1,21 +1,21 @@
 .modal-container {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.6); /*半透明黑色背景*/
+  background-color: rgba(0, 0, 0, 0.6); /*半透明*/
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  opacity: 1; /*淡入動畫*/
-  visibility: visible; /*看的見、可互動*/
+  opacity: 1; 
+  visibility: visible;
   backdrop-filter: blur(3px); /*背景內容模糊*/
   padding: 20px;
   transition: opacity 0.3s ease, visibility 0s ease 0s; /*visibility立刻執行 立刻彈出視窗*/
 }
 
 .modal-container.hidden {
-  opacity: 0; /*淡出動畫*/
-  visibility: hidden; /*看不見、不可互動*/
+  opacity: 0;
+  visibility: hidden;
   transition: opacity 0.3s ease, visibility 0s ease 0.3s, /*visibility延遲0.3秒執行 動畫執行完後隱藏*/
     backdrop-filter 0.3s ease;
   backdrop-filter: blur(0px); /*背景內容清晰*/
