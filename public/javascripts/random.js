@@ -1,49 +1,86 @@
 // API 連結
-const SEARCH_API_URL = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
+const RANDOM_API_URL = "https://www.themealdb.com/api/json/v1/1/random.php";
 const LOOKUP_API_URL = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
 
 // 抓取 HTML 元素
-const searchForm = document.getElementById("search-form");
-const searchInput = document.getElementById("search-input");
-const resultsGrid = document.getElementById("results-grid");
+const resultContainer = document.getElementById("result");
 const messageArea = document.getElementById("message-area");
+const randomBtn = document.getElementById("random-btn");
 const modal = document.getElementById("recipe-modal");
 const modalContent = document.getElementById("recipe-details-content");
 const modalCloseBtn = document.getElementById("modal-close-btn");
 
-// 搜尋表單 submit
-searchForm.addEventListener("submit", (e) => {
-  e.preventDefault(); // 阻止頁面重新載入
-  const searchTerm = searchInput.value.trim();
+// 按鈕點擊
+randomBtn.addEventListener("click", getRandomRecipe);
 
-  if (searchTerm) {
-    searchRecipes(searchTerm); // 呼叫搜尋功能
-  } else {
-    showMessage("Please enter a search term", true);
-  }
-});
-
-// 向 API 搜尋資料
-async function searchRecipes(query) {
-  showMessage(`Searching for "${query}"...`, false, true);
-  resultsGrid.innerHTML = ""; // 清空舊結果
+// 抓隨機食譜
+async function getRandomRecipe() {
+  showMessage("Finding a random recipe for you...", false, true);
+  resultContainer.innerHTML = "";
 
   try {
-    const response = await fetch(`${SEARCH_API_URL}${query}`);
-    if (!response.ok) throw new Error("Network error");
-
-    const data = await response.json();
+    const res = await fetch(RANDOM_API_URL);
+    const data = await res.json();
     clearMessage();
-    console.log("data: ", data);
 
-    if (data.meals) {
-      displayRecipes(data.meals);
+    if (data.meals && data.meals.length > 0) {
+      displayRandomRecipe(data.meals[0]);
     } else {
-      showMessage(`No recipes found for "${query}",`);
+      showMessage("No recipe found.", true);
     }
-  } catch (error) {
-    showMessage("Something went wrong, Please try again.", true);
+  } catch {
+    showMessage("Something went wrong.", true);
   }
+}
+
+// 顯示卡片
+function displayRandomRecipe(recipe) {
+  const card = document.createElement("div");
+  card.classList.add("recipe-item");
+  card.dataset.id = recipe.idMeal;
+
+  card.innerHTML = `
+    <img src="${recipe.strMealThumb}" alt="${recipe.strMeal}">
+    <h3>${recipe.strMeal}</h3>
+    <button class="add-favorite-btn">⭐</button>
+  `;
+
+  // 開 modal
+  card.addEventListener("click", () => getRecipeDetails(recipe.idMeal));
+
+  // 收藏
+  card.querySelector(".add-favorite-btn").addEventListener("click", async (e) => {
+    e.stopPropagation();
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      showFloatingMessage("Please log in first!", "error");
+      return;
+    }
+
+    try {
+      const res = await fetch("/favorites/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token,
+        },
+        body: JSON.stringify({
+          recipeId: recipe.idMeal,
+          title: recipe.strMeal,
+          thumbnail: recipe.strMealThumb,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.success) showFloatingMessage("Added to favorites!", "success");
+      else showFloatingMessage(data.message, "error");
+    } catch {
+      showFloatingMessage("Failed to add favorite.", "error");
+    }
+  });
+
+  resultContainer.appendChild(card);
 }
 
 // 顯示提示字框
@@ -74,61 +111,6 @@ function showFloatingMessage(message, type = "success", duration = 3000) {
   }, duration);
 }
 
-// 將搜尋結果顯示成卡片(DOM)
-function displayRecipes(recipes) {
-  if (!recipes || recipes.length === 0) {
-    showMessage("No recipes to display");
-    return;
-  }
-
-  recipes.forEach(recipe => {
-    const recipeDiv = document.createElement("div");
-    recipeDiv.classList.add("recipe-item");
-    recipeDiv.dataset.id = recipe.idMeal;
-
-    recipeDiv.innerHTML = `
-      <img src="${recipe.strMealThumb}" alt="${recipe.strMeal}" loading="lazy">
-      <h3>${recipe.strMeal}</h3>
-      <button class="add-favorite-btn">⭐</button>
-    `;
-
-    // 點擊卡片開 modal
-    recipeDiv.addEventListener("click", () => getRecipeDetails(recipe.idMeal));
-
-    // 點擊收藏按鈕
-    recipeDiv.querySelector(".add-favorite-btn").addEventListener("click", async (e) => {
-      e.stopPropagation(); // 防止觸發 modal
-      const token = localStorage.getItem("token");
-      if (!token) {
-        showFloatingMessage("Please log in first!", "error");  
-        return
-      }
-
-      try {
-        const res = await fetch("/favorites/add", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token,
-          },
-          body: JSON.stringify({
-            recipeId: recipe.idMeal,
-            title: recipe.strMeal,
-            thumbnail: recipe.strMealThumb
-          }),
-        });
-        const data = await res.json();
-        if (data.success) showFloatingMessage("Added to favorites!", "success");
-        else showFloatingMessage(data.message, "error");
-      } catch (err) {
-        showFloatingMessage("Failed to add favorite.", "error");
-      }
-    });
-
-    resultsGrid.appendChild(recipeDiv);
-  });
-}
-
 // 開啟食譜卡彈出視窗
 function showModal() {
   modal.classList.remove("hidden");
@@ -141,14 +123,12 @@ function closeModal() {
   document.body.style.overflow = "";
 }
 
-// 點擊卡片 → 顯示詳細資料
-resultsGrid.addEventListener("click", (e) => {
-  const card = e.target.closest(".recipe-item");
+// 關閉按鈕點擊
+modalCloseBtn.addEventListener("click", closeModal);
 
-  if (card) {
-    const recipeId = card.dataset.id;
-    getRecipeDetails(recipeId);
-  }
+// 彈出視窗背景點擊
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) closeModal();
 });
 
 // 抓取單一食譜詳細資料 (利用食譜ID)
@@ -173,16 +153,6 @@ async function getRecipeDetails(id) {
       '<p class="message error">Failed to load recipe details. Check your connection or try again.</p>';
   }
 }
-
-// 關閉按鈕點擊
-modalCloseBtn.addEventListener("click", closeModal);
-
-// 彈出視窗背景點擊
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) {
-    closeModal();
-  }
-});
 
 // 顯示詳細資料在彈出視窗
 function displayRecipeDetails(recipe) {

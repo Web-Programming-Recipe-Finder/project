@@ -4,12 +4,12 @@
 
   <head>
     <meta charset="UTF-8" />
-    <title>My Favorites</title>
+    <title>Random Recipe</title>
     <link rel="icon" type="image/png" href="images/plate.png" />
-    <link rel="stylesheet" href="stylesheets/favorites.css" />
+    <link rel="stylesheet" href="stylesheets/random.css" />
     <link rel="stylesheet" href="stylesheets/sidebar.css" />
-    <link rel="stylesheet" href="stylesheets/login.css" />
     <link rel="stylesheet" href="stylesheets/modal.css" />
+    <link rel="stylesheet" href="stylesheets/login.css" />
   </head>
 
   <body>
@@ -37,17 +37,22 @@
       <button id="login-btn" class="login-btn">Login</button>
     </div>
 
-    <!-- 收藏頁內容 -->
+    <!-- 隨機食譜頁內容 -->
     <div class="content" id="content">
-      <div class="favorites-container">
-        <h1>My Favorites</h1>
+      <div class="random-recipe-container">
+        <h1>Random Recipe</h1>
+
+        <!-- 隨機食譜按鈕 -->
+        <button id="random-btn" class="random-btn">🎲 Get Random Recipe 🎲</button>
 
         <!-- 提示字框 -->
-        <div class="message" id="message-area"></div>
+        <div class="message" id="message-area">
+          Not sure what to eat? Click the button!!!
+        </div>
         <div id="floating-message" class="floating-message hidden"></div>
 
-        <!-- 食譜卡列表 -->
-        <div class="results-grid" id="results-grid"></div>
+        <!-- 隨機食譜卡 -->
+        <div class="result" id="result"></div>
       </div>
 
       <!-- 食譜卡彈出視窗 -->
@@ -58,9 +63,9 @@
         </div>
       </div>
     </div>
+    <script src="javascripts/random.js"></script>
     <script src="javascripts/sidebar.js"></script>
     <script src="javascripts/login.js"></script>
-    <script src="javascripts/favorites.js"></script>
   </body>
 
 </html>
